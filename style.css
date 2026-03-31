@@ -1,0 +1,486 @@
+/* 基础样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 登录/注册样式 */
+.auth-container {
+  background-color: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+}
+
+.auth-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #4CAF50;
+}
+
+.form-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.message {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.message.error {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.message.success {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+}
+
+/* 主页样式 */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-left h1 {
+  color: #4CAF50;
+  font-size: 24px;
+  cursor: text;
+  padding: 5px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.header-left h1:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.header-right {
+  display: flex;
+  gap: 10px;
+}
+
+.header-right button {
+  padding: 8px 12px;
+  margin: 0;
+  font-size: 14px;
+}
+
+#theme-toggle {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+#theme-toggle:hover {
+  background-color: #e0e0e0;
+}
+
+.user-info {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.add-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.note-type-selector,
+.note-deadline {
+  flex: 1;
+  min-width: 150px;
+}
+
+.note-type-selector label,
+.note-deadline label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+.add-note input[type="text"] {
+  flex: 2;
+  min-width: 200px;
+  margin: 0;
+}
+
+.add-note button {
+  width: auto;
+  white-space: nowrap;
+  margin: 0;
+  align-self: flex-end;
+}
+
+.notes-container h2 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.note-item {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* 角色背景颜色 */
+.note-item.role-爸爸 {
+  border-left: 4px solid #3498db;
+  background-color: #ebf5fb;
+}
+
+.note-item.role-妈妈 {
+  border-left: 4px solid #e74c3c;
+  background-color: #fdecea;
+}
+
+.note-item.role-爷爷 {
+  border-left: 4px solid #9b59b6;
+  background-color: #f4ebf7;
+}
+
+.note-item.role-奶奶 {
+  border-left: 4px solid #f39c12;
+  background-color: #fef5e7;
+}
+
+.note-item.role-姥姥 {
+  border-left: 4px solid #1abc9c;
+  background-color: #e8f8f5;
+}
+
+.note-item.role-姥爷 {
+  border-left: 4px solid #34495e;
+  background-color: #ecf0f1;
+}
+
+.note-item.role-宝宝 {
+  border-left: 4px solid #27ae60;
+  background-color: #eafaf1;
+}
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.note-type {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+.note-deadline-info {
+  font-size: 14px;
+  color: #666;
+}
+
+.note-deadline-info.overdue {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.note-content {
+  margin-bottom: 10px;
+}
+
+.note-text {
+  font-size: 16px;
+  margin-bottom: 5px;
+  word-break: break-word;
+}
+
+.note-meta {
+  font-size: 12px;
+  color: #666;
+}
+
+.note-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.note-actions button {
+  padding: 6px 10px;
+  margin: 0;
+  font-size: 12px;
+  min-width: 60px;
+}
+
+.edit-btn {
+  background-color: #2196F3;
+}
+
+.edit-btn:hover {
+  background-color: #1976D2;
+}
+
+.delete-btn {
+  background-color: #f44336;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+.complete-btn {
+  background-color: #ff9800;
+}
+
+.complete-btn:hover {
+  background-color: #f57c00;
+}
+
+.reply-btn {
+  background-color: #9c27b0;
+}
+
+.reply-btn:hover {
+  background-color: #7b1fa2;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #666;
+}
+
+/* 回复功能 */
+.replies-section {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.replies-section h4 {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.replies-list {
+  margin-bottom: 10px;
+}
+
+.reply-item {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.reply-content {
+  margin-bottom: 5px;
+  word-break: break-word;
+}
+
+.reply-meta {
+  font-size: 12px;
+  color: #999;
+}
+
+.reply-form {
+  margin-top: 10px;
+  display: flex;
+  gap: 5px;
+}
+
+.reply-form input {
+  flex: 1;
+  margin: 0;
+  font-size: 14px;
+  padding: 8px;
+}
+
+.reply-form button {
+  width: auto;
+  padding: 8px 12px;
+  margin: 0;
+  font-size: 12px;
+}
+
+/* 编辑模式 */
+.note-edit input {
+  margin: 0 0 10px 0;
+}
+
+.note-edit-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.note-edit-buttons button {
+  padding: 6px 10px;
+  margin: 0;
+  font-size: 12px;
+  min-width: 60px;
+}
+
+.save-btn {
+  background-color: #4CAF50;
+}
+
+.cancel-btn {
+  background-color: #9e9e9e;
+}
+
+/* 深色模式 */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode .auth-container,
+body.dark-mode .user-info,
+body.dark-mode .add-note,
+body.dark-mode .note-item {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode input,
+body.dark-mode select {
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #555;
+}
+
+body.dark-mode .completed {
+  color: #95a5a6;
+}
+
+body.dark-mode .message.error {
+  background-color: #372929;
+  color: #e57373;
+}
+
+body.dark-mode .message.success {
+  background-color: #293729;
+  color: #81c784;
+}
+
+body.dark-mode .reply-item {
+  background-color: #2c2c2c;
+}
+
+body.dark-mode .replies-section {
+  border-top: 1px solid #333;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .auth-container {
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .add-note {
+    flex-direction: column;
+  }
+  
+  .add-note input[type="text"] {
+    width: 100%;
+  }
+  
+  .add-note button {
+    width: 100%;
+  }
+  
+  .note-actions {
+    flex-wrap: wrap;
+  }
+  
+  .header-right {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .header-right button {
+    width: 100%;
+  }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.note-item {
+  animation: fadeIn 0.3s ease;
+}
+
+/* 图标样式 */
+.note-type-icon {
+  font-size: 16px;
+}

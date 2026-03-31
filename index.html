@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>家庭共享备忘录 - 登录</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="auth-container">
+      <h1>家庭共享备忘录</h1>
+      
+      <div id="login-form" class="form-container">
+        <h2>登录</h2>
+        <input type="email" id="login-email" placeholder="邮箱" required>
+        <input type="password" id="login-password" placeholder="密码" required>
+        <button id="login-btn">登录</button>
+        <p>还没有账号？<a href="#" id="switch-to-register">注册</a></p>
+      </div>
+      
+      <div id="register-form" class="form-container" style="display: none;">
+        <h2>注册</h2>
+        <input type="email" id="register-email" placeholder="邮箱" required>
+        <input type="password" id="register-password" placeholder="密码" required>
+        <select id="register-role" required>
+          <option value="">选择角色</option>
+          <option value="爸爸">爸爸</option>
+          <option value="妈妈">妈妈</option>
+          <option value="爷爷">爷爷</option>
+          <option value="奶奶">奶奶</option>
+          <option value="姥姥">姥姥</option>
+          <option value="姥爷">姥爷</option>
+          <option value="宝宝">宝宝</option>
+        </select>
+        <button id="register-btn">注册</button>
+        <p>已有账号？<a href="#" id="switch-to-login">登录</a></p>
+      </div>
+      
+      <div id="auth-message" class="message"></div>
+    </div>
+  </div>
+  
+  <script src="firebase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>家庭共享备忘录</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-left">
+        <h1 id="app-title" contenteditable="true">家庭共享备忘录</h1>
+      </div>
+      <div class="header-right">
+        <button id="theme-toggle">🌙</button>
+        <button id="logout-btn">退出登录</button>
+      </div>
+    </header>
+    
+    <div class="user-info">
+      <span id="user-role">角色: </span>
+      <span id="user-email">邮箱: </span>
+    </div>
+    
+    <div class="add-note">
+      <div class="note-type-selector">
+        <label for="note-type">类型:</label>
+        <select id="note-type">
+          <option value="购物">购物</option>
+          <option value="记事">记事</option>
+          <option value="取快递">取快递</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+      <div class="note-deadline">
+        <label for="note-deadline">截止期限:</label>
+        <input type="datetime-local" id="note-deadline">
+      </div>
+      <input type="text" id="new-note" placeholder="添加新备忘录...">
+      <button id="add-note-btn">添加</button>
+    </div>
+    
+    <div class="notes-container">
+      <h2>所有备忘录</h2>
+      <div id="notes-list" class="notes-list">
+        <!-- 备忘录将在这里动态生成 -->
+      </div>
+    </div>
+  </div>
+  
+  <script src="firebase-config.js"></script>
+  <script src="home.js"></script>
+</body>
+</html>
