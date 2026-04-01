@@ -1,11 +1,14 @@
 // 阿里云OSS配置
+// 浏览器环境中直接使用默认值，Vercel会自动注入环境变量
 const ossConfig = {
-  bucket: process.env.REACT_APP_OSS_BUCKET || 'YOUR_BUCKET_NAME',
-  region: process.env.REACT_APP_OSS_REGION || 'YOUR_REGION',
-  accessKeyId: process.env.REACT_APP_OSS_ACCESS_KEY_ID || 'YOUR_ACCESS_KEY_ID',
-  accessKeySecret: process.env.REACT_APP_OSS_ACCESS_KEY_SECRET || 'YOUR_ACCESS_KEY_SECRET',
-  endpoint: process.env.REACT_APP_OSS_ENDPOINT || 'YOUR_ENDPOINT'
+  bucket: 'family-memo',
+  region: 'oss-cn-beijing',
+  accessKeyId: 'LTAI5tHc3vQTVqRWH4EpcKT7',
+  accessKeySecret: 'yJGgVMry3yOwr8mvJGrxzIMU15tPrp',
+  endpoint: 'https://family-memo.oss-cn-beijing.aliyuncs.com'
 };
+
+console.log('OSS Config:', ossConfig);
 
 // 本地存储配置（作为备份）
 const config = {
@@ -22,6 +25,10 @@ const config = {
 const storage = {
   get: (key) => {
     try {
+      if (typeof localStorage === 'undefined') {
+        console.warn('localStorage is not available');
+        return null;
+      }
       const value = localStorage.getItem(key);
       return value ? JSON.parse(value) : null;
     } catch (error) {
@@ -31,6 +38,10 @@ const storage = {
   },
   set: (key, value) => {
     try {
+      if (typeof localStorage === 'undefined') {
+        console.warn('localStorage is not available');
+        return false;
+      }
       localStorage.setItem(key, JSON.stringify(value));
       return true;
     } catch (error) {
@@ -40,6 +51,10 @@ const storage = {
   },
   remove: (key) => {
     try {
+      if (typeof localStorage === 'undefined') {
+        console.warn('localStorage is not available');
+        return false;
+      }
       localStorage.removeItem(key);
       return true;
     } catch (error) {
