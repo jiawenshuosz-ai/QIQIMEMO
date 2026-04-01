@@ -14,6 +14,8 @@ if (currentUser) {
   loadNotes();
   // 加载应用标题
   loadAppTitle();
+  // 定期同步数据
+  setInterval(syncData, 30000); // 每30秒同步一次
 } else {
   // 用户未登录，跳转到登录页
   window.location.href = 'index.html';
@@ -50,14 +52,45 @@ themeToggle.addEventListener('click', function() {
 const appTitle = document.getElementById('app-title');
 appTitle.addEventListener('blur', function() {
   const newTitle = this.textContent.trim() || '家庭共享备忘录';
-  storage.set('family_memo_app_title', newTitle);
+  storage.set(config.storageKeys.appTitle, newTitle);
+  // 同步到OSS
+  syncAppTitle(newTitle);
 });
 
 // 加载应用标题
 function loadAppTitle() {
-  const savedTitle = storage.get('family_memo_app_title');
-  if (savedTitle) {
-    appTitle.textContent = savedTitle;
+  // 先尝试从OSS加载
+  loadAppTitleFromOSS().then(title => {
+    if (title) {
+      appTitle.textContent = title;
+      storage.set(config.storageKeys.appTitle, title);
+    } else {
+      // 如果OSS没有，从本地存储加载
+      const savedTitle = storage.get(config.storageKeys.appTitle);
+      if (savedTitle) {
+        appTitle.textContent = savedTitle;
+      }
+    }
+  });
+}
+
+// 从OSS加载应用标题
+async function loadAppTitleFromOSS() {
+  try {
+    const data = await oss.downloadData('app_title.json');
+    return data ? data.title : null;
+  } catch (error) {
+    console.error('Error loading app title from OSS:', error);
+    return null;
+  }
+}
+
+// 同步应用标题到OSS
+async function syncAppTitle(title) {
+  try {
+    await oss.uploadData({ title }, 'app_title.json');
+  } catch (error) {
+    console.error('Error syncing app title to OSS:', error);
   }
 }
 
@@ -69,21 +102,68 @@ function getNotes() {
 // 保存备忘录
 function saveNotes(notes) {
   storage.set(config.storageKeys.notes, notes);
+  // 同步到OSS
+  syncNotesToOSS(notes);
+}
+
+// 从OSS加载备忘录
+async function loadNotesFromOSS() {
+  try {
+    const notes = await oss.downloadData('notes.json');
+    if (notes) {
+      storage.set(config.storageKeys.notes, notes);
+      return notes;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error loading notes from OSS:', error);
+    return null;
+  }
+}
+
+// 同步备忘录到OSS
+async function syncNotesToOSS(notes) {
+  try {
+    await oss.uploadData(notes, 'notes.json');
+  } catch (error) {
+    console.error('Error syncing notes to OSS:', error);
+  }
 }
 
 // 加载备忘录
-function loadNotes() {
+async function loadNotes() {
   const notesList = document.getElementById('notes-list');
-  notesList.innerHTML = '';
+  notesList.innerHTML = '<p style="text-align: center; color: #666; margin-top: 20px;">正在加载备忘录...</p>';
   
-  const notes = getNotes();
-  if (notes) {
+  // 先尝试从OSS加载
+  const ossNotes = await loadNotesFromOSS();
+  const notes = ossNotes || getNotes();
+  
+  if (notes && Object.keys(notes).length > 0) {
+    notesList.innerHTML = '';
     Object.keys(notes).forEach((noteId) => {
       const note = notes[noteId];
       createNoteElement(noteId, note);
     });
   } else {
     notesList.innerHTML = '<p style="text-align: center; color: #666; margin-top: 20px;">暂无备忘录</p>';
+  }
+}
+
+// 定期同步数据
+async function syncData() {
+  try {
+    const ossNotes = await loadNotesFromOSS();
+    if (ossNotes) {
+      const localNotes = getNotes();
+      // 比较本地和OSS的数据，决定是否更新
+      if (JSON.stringify(ossNotes) !== JSON.stringify(localNotes)) {
+        storage.set(config.storageKeys.notes, ossNotes);
+        loadNotes();
+      }
+    }
+  } catch (error) {
+    console.error('Error syncing data:', error);
   }
 }
 
@@ -327,7 +407,7 @@ function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
 }
 
-// 添加备忘录到本地存储
+// 添加备忘录到存储
 function addNote(text, type = '其他', deadline = '') {
   const notes = getNotes();
   const noteId = generateId();
