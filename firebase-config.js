@@ -1,10 +1,10 @@
 // 阿里云OSS配置
 const ossConfig = {
-  bucket: process.env.REACT_APP_OSS_BUCKET || 'family-memo',
-  region: process.env.REACT_APP_OSS_REGION || 'oss-cn-beijing',
+  bucket: process.env.REACT_APP_OSS_BUCKET || 'YOUR_BUCKET_NAME',
+  region: process.env.REACT_APP_OSS_REGION || 'YOUR_REGION',
   accessKeyId: process.env.REACT_APP_OSS_ACCESS_KEY_ID || 'YOUR_ACCESS_KEY_ID',
   accessKeySecret: process.env.REACT_APP_OSS_ACCESS_KEY_SECRET || 'YOUR_ACCESS_KEY_SECRET',
-  endpoint: process.env.REACT_APP_OSS_ENDPOINT || 'https://family-memo.oss-cn-beijing.aliyuncs.com'
+  endpoint: process.env.REACT_APP_OSS_ENDPOINT || 'YOUR_ENDPOINT'
 };
 
 // 本地存储配置（作为备份）
