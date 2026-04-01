@@ -1,0 +1,19 @@
+# 环境变量文件
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 依赖包
+node_modules/
+
+# 构建产物
+build/
+dist/
+
+# 编辑器文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
