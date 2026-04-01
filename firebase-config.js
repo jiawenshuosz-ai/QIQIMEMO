@@ -1,10 +1,20 @@
-// 本地存储配置
+// 阿里云OSS配置
+const ossConfig = {
+  bucket: process.env.REACT_APP_OSS_BUCKET || 'YOUR_BUCKET_NAME',
+  region: process.env.REACT_APP_OSS_REGION || 'YOUR_REGION',
+  accessKeyId: process.env.REACT_APP_OSS_ACCESS_KEY_ID || 'YOUR_ACCESS_KEY_ID',
+  accessKeySecret: process.env.REACT_APP_OSS_ACCESS_KEY_SECRET || 'YOUR_ACCESS_KEY_SECRET',
+  endpoint: process.env.REACT_APP_OSS_ENDPOINT || 'YOUR_ENDPOINT'
+};
+
+// 本地存储配置（作为备份）
 const config = {
   // 本地存储键名
   storageKeys: {
     users: 'family_memo_users',
     notes: 'family_memo_notes',
-    currentUser: 'family_memo_current_user'
+    currentUser: 'family_memo_current_user',
+    appTitle: 'family_memo_app_title'
   }
 };
 
@@ -35,6 +45,51 @@ const storage = {
     } catch (error) {
       console.error('Error removing data from localStorage:', error);
       return false;
+    }
+  }
+};
+
+// OSS工具函数
+const oss = {
+  // 生成签名URL（用于临时访问）
+  generateSignedUrl: (objectName, method = 'GET', expires = 3600) => {
+    // 注意：在实际应用中，签名应该在服务器端生成
+    // 这里为了简化，我们使用一个简单的方法
+    // 生产环境中请使用阿里云SDK生成签名
+    const url = `${ossConfig.endpoint}/${objectName}`;
+    return url;
+  },
+  
+  // 上传数据到OSS
+  async uploadData(data, objectName) {
+    try {
+      const url = this.generateSignedUrl(objectName, 'PUT');
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      return response.ok;
+    } catch (error) {
+      console.error('Error uploading data to OSS:', error);
+      return false;
+    }
+  },
+  
+  // 从OSS下载数据
+  async downloadData(objectName) {
+    try {
+      const url = this.generateSignedUrl(objectName);
+      const response = await fetch(url);
+      if (response.ok) {
+        return await response.json();
+      }
+      return null;
+    } catch (error) {
+      console.error('Error downloading data from OSS:', error);
+      return null;
     }
   }
 };
